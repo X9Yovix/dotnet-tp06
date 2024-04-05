@@ -18,7 +18,8 @@ namespace TP06.Controllers
         // GET: Ouvrage
         public ActionResult Index()
         {
-            return View(db.Ouvrages.ToList());
+            var ouvrages = db.Ouvrages.Include(o => o.Categorie);
+            return View(ouvrages.ToList());
         }
 
         // GET: Ouvrage/Details/5
@@ -39,6 +40,7 @@ namespace TP06.Controllers
         // GET: Ouvrage/Create
         public ActionResult Create()
         {
+            ViewBag.CategorieId = new SelectList(db.Categories, "Id", "Nom");
             return View();
         }
 
@@ -47,7 +49,7 @@ namespace TP06.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titre,Descriptif,Prix")] Ouvrage ouvrage)
+        public ActionResult Create([Bind(Include = "Id,Titre,Descriptif,Prix,CategorieId")] Ouvrage ouvrage)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +58,7 @@ namespace TP06.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CategorieId = new SelectList(db.Categories, "Id", "Nom", ouvrage.CategorieId);
             return View(ouvrage);
         }
 
@@ -71,6 +74,7 @@ namespace TP06.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategorieId = new SelectList(db.Categories, "Id", "Nom", ouvrage.CategorieId);
             return View(ouvrage);
         }
 
@@ -79,7 +83,7 @@ namespace TP06.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titre,Descriptif,Prix")] Ouvrage ouvrage)
+        public ActionResult Edit([Bind(Include = "Id,Titre,Descriptif,Prix,CategorieId")] Ouvrage ouvrage)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +91,7 @@ namespace TP06.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CategorieId = new SelectList(db.Categories, "Id", "Nom", ouvrage.CategorieId);
             return View(ouvrage);
         }
 
