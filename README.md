@@ -5,3 +5,8 @@ La page par défaut sera généralement l'index du controleur Home, car dans le 
 
 ### 3. Quelle est le layout principal de notre application, par défaut ? Décrire l’instruction permettant de charger le contenu d’une page à l’intérieur d’une page de disposition.
 Layout principal de notre application par défaut est généralement spécifié dans le fichier _Layout.cshtml et situé dans le répertoire Views/Shared et pour charger le contenu d'une page on utilise @RenderBody()
+
+### 4. Quelles méthodes peut-on adopter pour définir un layout principal de notre application ?
+- Au niveau du fichier _ViewStart.cshtml
+- Au niveau de la vue fille
+- Au niveau d’une méthode d’action
